@@ -1,0 +1,18 @@
+<!DOCTYPE html>
+<html lang="en"><head><meta charset="UTF-8"><title>Colors — Semantic Surfaces</title>
+<link rel="stylesheet" href="../colors_and_type.css">
+<style>
+  body{margin:0;padding:20px;background:#fff}
+  .row{display:grid;grid-template-columns:repeat(4,1fr);gap:12px}
+  .sw{border-radius:8px;padding:14px;display:flex;flex-direction:column;gap:6px;min-height:96px;justify-content:flex-end}
+  .name{font:500 13px/18px var(--font-sans)}
+  .hex{font:400 11px/14px var(--font-sans);opacity:.7;font-variant-numeric:tabular-nums}
+  .role{font:400 11px/14px var(--font-sans);opacity:.7}
+</style></head><body>
+<div class="row">
+  <div class="sw" style="background:var(--gc-pink);color:#fff"><div class="name">Hero / Primary</div><div class="hex">--color-bg-hero</div><div class="role">Full-bleed pink hero</div></div>
+  <div class="sw" style="background:var(--gc-pink-50);color:var(--gc-ink)"><div class="name">Footer</div><div class="hex">--color-bg-footer</div><div class="role">#FDEAF2</div></div>
+  <div class="sw" style="background:var(--gc-bg-info);color:var(--gc-ink)"><div class="name">FAQ Header</div><div class="hex">#E3EBFF</div><div class="role">Open state</div></div>
+  <div class="sw" style="background:var(--gc-bg-info-soft);color:var(--gc-ink)"><div class="name">FAQ Body</div><div class="hex">#EFF3FF</div><div class="role">Info panel</div></div>
+</div>
+</body></html>

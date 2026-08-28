@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<html lang="en"><head><meta charset="UTF-8"><title>Colors — Brand</title>
+<link rel="stylesheet" href="../colors_and_type.css">
+<style>
+  body{margin:0;padding:24px;background:#fff}
+  .row{display:grid;grid-template-columns:repeat(5,1fr);gap:12px}
+  .sw{display:flex;flex-direction:column;gap:6px}
+  .chip{height:56px;border-radius:8px;box-shadow:var(--shadow-card)}
+  .name{font:500 12px/16px var(--font-sans);color:var(--gc-ink)}
+  .hex{font:400 11px/14px var(--font-sans);color:var(--gc-gray-400);font-variant-numeric:tabular-nums}
+</style></head><body>
+<div class="row">
+  <div class="sw"><div class="chip" style="background:var(--gc-pink)"></div><div class="name">Pink / Brand</div><div class="hex">#EE2A7B</div></div>
+  <div class="sw"><div class="chip" style="background:var(--gc-pink-hover)"></div><div class="name">Pink Hover</div><div class="hex">#D21E69</div></div>
+  <div class="sw"><div class="chip" style="background:var(--gc-pink-100)"></div><div class="name">Pink 100</div><div class="hex">#FB627D</div></div>
+  <div class="sw"><div class="chip" style="background:var(--gc-pink-50);border:1px solid #f0d9e3"></div><div class="name">Pink 50</div><div class="hex">#FDEAF2</div></div>
+  <div class="sw"><div class="chip" style="background:var(--gc-gradient-accent)"></div><div class="name">Accent Gradient</div><div class="hex">Pink → Yellow</div></div>
+</div>
+</body></html>

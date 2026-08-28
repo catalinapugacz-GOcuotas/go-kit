@@ -1,0 +1,420 @@
+<!DOCTYPE html>
+<html lang="es" data-theme="light">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Vista previa de esquemas de color</title>
+<style>
+  :root {
+    --radius: 10px;
+    --font: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+  }
+
+  * { box-sizing: border-box; }
+
+  body {
+    margin: 0;
+    padding: 40px 24px 80px;
+    font-family: var(--font);
+    background: #f3f4f6;
+    color: #111827;
+    transition: background 0.2s ease;
+  }
+
+  html[data-theme="dark"] body {
+    background: #030712;
+    color: #e5e7eb;
+  }
+
+  header {
+    max-width: 1100px;
+    margin: 0 auto 32px;
+    display: flex;
+    align-items: flex-start;
+    justify-content: space-between;
+    gap: 16px;
+    flex-wrap: wrap;
+  }
+
+  header h1 {
+    font-size: 22px;
+    margin: 0 0 6px;
+  }
+
+  header p {
+    margin: 0;
+    font-size: 14px;
+    color: #6b7280;
+    max-width: 520px;
+  }
+
+  html[data-theme="dark"] header p { color: #9ca3af; }
+
+  #theme-toggle {
+    border: 1px solid #d1d5db;
+    background: #ffffff;
+    color: inherit;
+    border-radius: 999px;
+    padding: 8px 16px;
+    font-size: 13px;
+    font-family: var(--font);
+    cursor: pointer;
+    white-space: nowrap;
+  }
+
+  html[data-theme="dark"] #theme-toggle {
+    border-color: #374151;
+    background: #111827;
+  }
+
+  main {
+    max-width: 1100px;
+    margin: 0 auto;
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: 20px;
+  }
+
+  /* ---------------------------------------------------------------
+     PALETAS
+     Cada bloque define las 5 variables requeridas para claro y oscuro.
+     Un agente reemplaza los valores hex dentro del bloque marcado,
+     sin tocar el resto del CSS.
+  --------------------------------------------------------------- */
+
+  /* PALETA — reemplazar acá (Esquema 1) */
+  .scheme-1 {
+    --primary: #2563eb;
+    --secondary: #64748b;
+    --accent: #f59e0b;
+    --background: #ffffff;
+    --foreground: #0f172a;
+  }
+  [data-theme="dark"] .scheme-1 {
+    --primary: #3b82f6;
+    --secondary: #94a3b8;
+    --accent: #fbbf24;
+    --background: #0f172a;
+    --foreground: #f1f5f9;
+  }
+
+  /* PALETA — reemplazar acá (Esquema 2) */
+  .scheme-2 {
+    --primary: #059669;
+    --secondary: #57534e;
+    --accent: #ec4899;
+    --background: #ffffff;
+    --foreground: #1c1917;
+  }
+  [data-theme="dark"] .scheme-2 {
+    --primary: #34d399;
+    --secondary: #a8a29e;
+    --accent: #f472b6;
+    --background: #1c1917;
+    --foreground: #f5f5f4;
+  }
+
+  /* PALETA — reemplazar acá (Esquema 3) */
+  .scheme-3 {
+    --primary: #7c3aed;
+    --secondary: #6b7280;
+    --accent: #f97316;
+    --background: #ffffff;
+    --foreground: #111827;
+  }
+  [data-theme="dark"] .scheme-3 {
+    --primary: #a78bfa;
+    --secondary: #9ca3af;
+    --accent: #fb923c;
+    --background: #111827;
+    --foreground: #f9fafb;
+  }
+
+  /* ---------------------------------------------------------------
+     Estructura de columna, común a los 3 esquemas
+  --------------------------------------------------------------- */
+
+  .scheme {
+    background: var(--background);
+    color: var(--foreground);
+    border: 1px solid rgba(127, 127, 127, 0.2);
+    border-radius: var(--radius);
+    padding: 20px;
+    display: flex;
+    flex-direction: column;
+    gap: 18px;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.08);
+  }
+
+  .scheme-label {
+    font-size: 12px;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
+    opacity: 0.6;
+    margin: 0;
+  }
+
+  .swatches {
+    display: grid;
+    grid-template-columns: repeat(5, 1fr);
+    gap: 8px;
+  }
+
+  .swatch {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 4px;
+  }
+
+  .swatch-color {
+    width: 100%;
+    aspect-ratio: 1;
+    border-radius: 8px;
+    border: 1px solid rgba(127, 127, 127, 0.25);
+  }
+
+  .swatch-label {
+    font-size: 10px;
+    opacity: 0.7;
+  }
+
+  .swatch-hex {
+    font-size: 10px;
+    opacity: 0.55;
+    font-family: ui-monospace, "SF Mono", Menlo, monospace;
+  }
+
+  .components {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+  }
+
+  .buttons-row {
+    display: flex;
+    gap: 8px;
+    flex-wrap: wrap;
+  }
+
+  .btn {
+    border: none;
+    border-radius: 8px;
+    padding: 9px 16px;
+    font-size: 13px;
+    font-weight: 500;
+    font-family: var(--font);
+    cursor: pointer;
+  }
+
+  .btn-primary {
+    background: var(--primary);
+    color: var(--background);
+  }
+
+  .btn-secondary {
+    background: transparent;
+    color: var(--secondary);
+    border: 1px solid var(--secondary);
+  }
+
+  .card {
+    border: 1px solid rgba(127, 127, 127, 0.25);
+    border-radius: 8px;
+    padding: 14px;
+    font-size: 13px;
+  }
+
+  .card h3 {
+    margin: 0 0 4px;
+    font-size: 14px;
+    color: var(--primary);
+  }
+
+  .card p {
+    margin: 0;
+    opacity: 0.75;
+    line-height: 1.4;
+  }
+
+  .field label {
+    display: block;
+    font-size: 12px;
+    margin-bottom: 4px;
+    opacity: 0.75;
+  }
+
+  .field input {
+    width: 100%;
+    padding: 8px 10px;
+    border-radius: 6px;
+    border: 1px solid var(--secondary);
+    background: var(--background);
+    color: var(--foreground);
+    font-size: 13px;
+    font-family: var(--font);
+  }
+
+  .field input:focus {
+    outline: 2px solid var(--primary);
+    outline-offset: 1px;
+  }
+
+  .badge {
+    display: inline-block;
+    align-self: flex-start;
+    background: var(--accent);
+    color: var(--background);
+    font-size: 11px;
+    font-weight: 600;
+    padding: 4px 10px;
+    border-radius: 999px;
+  }
+
+  footer {
+    max-width: 1100px;
+    margin: 32px auto 0;
+    font-size: 12px;
+    text-align: center;
+    opacity: 0.5;
+  }
+</style>
+</head>
+<body>
+
+<header>
+  <div>
+    <h1>Vista previa de esquemas de color</h1>
+    <p>Elegí el esquema que mejor represente la app viendo botones, tarjetas, inputs y badges reales, con el hex de cada color a la vista.</p>
+  </div>
+  <button id="theme-toggle" type="button">Ver en oscuro</button>
+</header>
+
+<main>
+  <section class="scheme scheme-1">
+    <p class="scheme-label">Esquema 1</p>
+    <div class="swatches">
+      <div class="swatch"><div class="swatch-color" style="background:var(--primary)"></div><span class="swatch-label">primario</span></div>
+      <div class="swatch"><div class="swatch-color" style="background:var(--secondary)"></div><span class="swatch-label">secund.</span></div>
+      <div class="swatch"><div class="swatch-color" style="background:var(--accent)"></div><span class="swatch-label">acento</span></div>
+      <div class="swatch"><div class="swatch-color" style="background:var(--background)"></div><span class="swatch-label">fondo</span></div>
+      <div class="swatch"><div class="swatch-color" style="background:var(--foreground)"></div><span class="swatch-label">texto</span></div>
+    </div>
+    <div class="components">
+      <div class="buttons-row">
+        <button class="btn btn-primary" type="button">Continuar</button>
+        <button class="btn btn-secondary" type="button">Cancelar</button>
+      </div>
+      <div class="card">
+        <h3>Título de tarjeta</h3>
+        <p>Texto de ejemplo para mostrar cómo se ve el contenido dentro de una tarjeta con este esquema.</p>
+      </div>
+      <div class="field">
+        <label for="input-1">Nombre</label>
+        <input id="input-1" type="text" placeholder="Escribí algo...">
+      </div>
+      <span class="badge">Nuevo</span>
+    </div>
+  </section>
+
+  <section class="scheme scheme-2">
+    <p class="scheme-label">Esquema 2</p>
+    <div class="swatches">
+      <div class="swatch"><div class="swatch-color" style="background:var(--primary)"></div><span class="swatch-label">primario</span></div>
+      <div class="swatch"><div class="swatch-color" style="background:var(--secondary)"></div><span class="swatch-label">secund.</span></div>
+      <div class="swatch"><div class="swatch-color" style="background:var(--accent)"></div><span class="swatch-label">acento</span></div>
+      <div class="swatch"><div class="swatch-color" style="background:var(--background)"></div><span class="swatch-label">fondo</span></div>
+      <div class="swatch"><div class="swatch-color" style="background:var(--foreground)"></div><span class="swatch-label">texto</span></div>
+    </div>
+    <div class="components">
+      <div class="buttons-row">
+        <button class="btn btn-primary" type="button">Continuar</button>
+        <button class="btn btn-secondary" type="button">Cancelar</button>
+      </div>
+      <div class="card">
+        <h3>Título de tarjeta</h3>
+        <p>Texto de ejemplo para mostrar cómo se ve el contenido dentro de una tarjeta con este esquema.</p>
+      </div>
+      <div class="field">
+        <label for="input-2">Nombre</label>
+        <input id="input-2" type="text" placeholder="Escribí algo...">
+      </div>
+      <span class="badge">Nuevo</span>
+    </div>
+  </section>
+
+  <section class="scheme scheme-3">
+    <p class="scheme-label">Esquema 3</p>
+    <div class="swatches">
+      <div class="swatch"><div class="swatch-color" style="background:var(--primary)"></div><span class="swatch-label">primario</span></div>
+      <div class="swatch"><div class="swatch-color" style="background:var(--secondary)"></div><span class="swatch-label">secund.</span></div>
+      <div class="swatch"><div class="swatch-color" style="background:var(--accent)"></div><span class="swatch-label">acento</span></div>
+      <div class="swatch"><div class="swatch-color" style="background:var(--background)"></div><span class="swatch-label">fondo</span></div>
+      <div class="swatch"><div class="swatch-color" style="background:var(--foreground)"></div><span class="swatch-label">texto</span></div>
+    </div>
+    <div class="components">
+      <div class="buttons-row">
+        <button class="btn btn-primary" type="button">Continuar</button>
+        <button class="btn btn-secondary" type="button">Cancelar</button>
+      </div>
+      <div class="card">
+        <h3>Título de tarjeta</h3>
+        <p>Texto de ejemplo para mostrar cómo se ve el contenido dentro de una tarjeta con este esquema.</p>
+      </div>
+      <div class="field">
+        <label for="input-3">Nombre</label>
+        <input id="input-3" type="text" placeholder="Escribí algo...">
+      </div>
+      <span class="badge">Nuevo</span>
+    </div>
+  </section>
+</main>
+
+<footer>
+  <p>Vista previa generada localmente — ningún dato sale de esta página.</p>
+</footer>
+
+<script>
+  (function () {
+    var root = document.documentElement;
+    var toggle = document.getElementById('theme-toggle');
+
+    // Convierte "rgb(37, 99, 235)" en "#2563eb"
+    function toHex(rgb) {
+      var n = rgb.match(/\d+/g);
+      return '#' + n.slice(0, 3).map(function (c) {
+        return (+c).toString(16).padStart(2, '0');
+      }).join('');
+    }
+
+    // Muestra el hex efectivo de cada swatch leyendo el color computado.
+    // Se recalcula en cada toggle (variante dark/light) y siempre refleja
+    // las CSS vars reales, incluso después de reemplazar las paletas.
+    function updateHexLabels() {
+      document.querySelectorAll('.swatch').forEach(function (sw) {
+        var color = getComputedStyle(sw.querySelector('.swatch-color')).backgroundColor;
+        var hexEl = sw.querySelector('.swatch-hex');
+        if (!hexEl) {
+          hexEl = document.createElement('span');
+          hexEl.className = 'swatch-hex';
+          sw.appendChild(hexEl);
+        }
+        hexEl.textContent = toHex(color);
+      });
+    }
+
+    toggle.addEventListener('click', function () {
+      var isDark = root.getAttribute('data-theme') === 'dark';
+      var next = isDark ? 'light' : 'dark';
+      root.setAttribute('data-theme', next);
+      toggle.textContent = next === 'dark' ? 'Ver en claro' : 'Ver en oscuro';
+      updateHexLabels();
+    });
+
+    updateHexLabels();
+  })();
+</script>
+
+</body>
+</html>

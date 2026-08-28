@@ -1,0 +1,10 @@
+{
+  "hooks": {
+    "SessionStart": [
+      { "hooks": [{ "type": "command", "command": "bash scripts/backlog-summary.sh", "timeout": 10 }] }
+    ],
+    "PostToolUse": [
+      { "matcher": "Bash", "hooks": [{ "type": "command", "command": "bash scripts/bugfix-reminder.sh", "timeout": 10 }] }
+    ]
+  }
+}
